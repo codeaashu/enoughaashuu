@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Instrument_Serif } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import InstallAppPrompt from "../components/InstallAppPrompt";
 import "./globals.css";
 
@@ -57,6 +58,7 @@ export default function RootLayout({
       <body className="antialiased">
         {children}
         <InstallAppPrompt />
+        <Analytics />
       </body>
     </html>
   );
