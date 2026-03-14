@@ -1,4 +1,6 @@
-# 🍌 RemoveBanana
+![RemoveBanana Logo](public/Banana.webp)
+
+# RemoveBanana
 
 Remove invisible AI watermarks from Google Gemini-generated images using reverse alpha blending mathematics.
 

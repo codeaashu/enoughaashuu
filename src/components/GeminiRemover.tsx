@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import Image from "next/image";
 import { UploadCloud, Image as ImageIcon, CheckCircle, RefreshCcw, Download, X } from "lucide-react";
 import { processGeminiImage } from "@/lib/watermark";
 
@@ -80,7 +81,18 @@ export default function GeminiRemover() {
                     <ImageIcon className="w-8 h-8 text-blue-400" />
                 </div>
                 <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
-                    🍌 RemoveBanana <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Gemini Image Tool</span>
+                    <span className="inline-flex items-center gap-3">
+                        <Image
+                            src="/Banana.webp"
+                            alt="RemoveBanana logo"
+                            width={44}
+                            height={44}
+                            className="h-10 w-10 rounded-lg"
+                            priority
+                        />
+                        RemoveBanana
+                    </span>{" "}
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Gemini Image Tool</span>
                 </h2>
                 <p className="text-gray-400 text-lg max-w-2xl mx-auto">
                     Remove invisible AI watermarks from Google Gemini-generated images using reverse alpha blending mathematics.

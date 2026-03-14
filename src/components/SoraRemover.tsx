@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Copy, Download, Link as LinkIcon, Loader2, PlayCircle, AlertCircle, Video } from "lucide-react";
 
 export default function SoraRemover() {
@@ -54,7 +55,18 @@ export default function SoraRemover() {
                     <Video className="w-8 h-8 text-fuchsia-400" />
                 </div>
                 <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
-                    🍌 RemoveBanana <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-purple-600">Sora Tool</span>
+                    <span className="inline-flex items-center gap-3">
+                        <Image
+                            src="/Banana.webp"
+                            alt="RemoveBanana logo"
+                            width={44}
+                            height={44}
+                            className="h-10 w-10 rounded-lg"
+                            priority
+                        />
+                        RemoveBanana
+                    </span>{" "}
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-purple-600">Sora Tool</span>
                 </h2>
                 <p className="text-gray-400 text-lg max-w-2xl mx-auto">
                     Paste your Sora share link below to extract the original prompt and download the video through the RemoveBanana workflow.

@@ -14,30 +14,37 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://removebanana.aashuu.tech"),
-  title: "🍌 RemoveBanana",
+  title: "RemoveBanana",
   description:
     "Remove invisible AI watermarks from Google Gemini-generated images using reverse alpha blending mathematics.",
-  applicationName: "🍌 RemoveBanana",
+  applicationName: "RemoveBanana",
   authors: [{ name: "aashuu", url: "https://x.com/warrioraashuu/" }],
   creator: "aashuu",
   publisher: "aashuu",
   alternates: {
     canonical: "/",
   },
+  icons: {
+    icon: "/Banana.webp",
+    shortcut: "/Banana.webp",
+    apple: "/Banana.webp",
+  },
   openGraph: {
-    title: "🍌 RemoveBanana",
+    title: "RemoveBanana",
     description:
       "Remove invisible AI watermarks from Google Gemini-generated images using reverse alpha blending mathematics.",
     url: "https://removebanana.aashuu.tech/",
-    siteName: "🍌 RemoveBanana",
+    siteName: "RemoveBanana",
     type: "website",
+    images: ["/Banana.webp"],
   },
   twitter: {
     card: "summary_large_image",
     creator: "@warrioraashuu",
-    title: "🍌 RemoveBanana",
+    title: "RemoveBanana",
     description:
       "Remove invisible AI watermarks from Google Gemini-generated images using reverse alpha blending mathematics.",
+    images: ["/Banana.webp"],
   },
 };
 

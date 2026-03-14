@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Image as ImageIcon, Video, ShieldCheck, Zap, Code } from "lucide-react";
+import { Image as ImageIcon, Video, ShieldCheck, Zap, Code } from "lucide-react";
 import GeminiRemover from "@/components/GeminiRemover";
 import SoraRemover from "@/components/SoraRemover";
 
@@ -15,8 +16,15 @@ export default function Home() {
       <nav className="fixed top-0 w-full border-b border-white/5 bg-black/50 backdrop-blur-xl z-50">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-6 h-6 text-fuchsia-500" />
-            <span className="font-bold text-xl tracking-tight">🍌 RemoveBanana</span>
+            <Image
+              src="/Banana.webp"
+              alt="RemoveBanana logo"
+              width={28}
+              height={28}
+              className="h-7 w-7 rounded-md"
+              priority
+            />
+            <span className="font-bold text-xl tracking-tight">RemoveBanana</span>
           </div>
           <div className="flex items-center gap-6 text-sm font-medium text-gray-400">
             <a href="#how-it-works" className="hover:text-white transition-colors">How it Works</a>
@@ -56,7 +64,18 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight"
           >
-            🍌 RemoveBanana <br />
+            <span className="inline-flex items-center gap-3">
+              <Image
+                src="/Banana.webp"
+                alt="RemoveBanana logo"
+                width={56}
+                height={56}
+                className="h-12 w-12 md:h-14 md:w-14 rounded-xl"
+                priority
+              />
+              RemoveBanana
+            </span>
+            <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-fuchsia-400">
               Reverse Alpha Blending.
             </span>
@@ -137,7 +156,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">Why Choose Us?</h2>
-            <p className="text-gray-400">Built as 🍌 RemoveBanana by aashuu for fast, direct watermark workflows.</p>
+            <p className="text-gray-400">Built as RemoveBanana by aashuu for fast, direct watermark workflows.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -176,7 +195,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t border-white/5 py-12 text-center text-sm text-gray-500">
-        <p>© 2026 🍌 RemoveBanana. Created by aashuu.</p>
+        <p>© 2026 RemoveBanana. Created by aashuu.</p>
         <p className="mt-2 text-xs">
           <a href="https://removebanana.aashuu.tech/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">removebanana.aashuu.tech</a>
           {" · "}
