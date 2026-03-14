@@ -57,22 +57,23 @@ export default function TopNavbar() {
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-3 sm:gap-5 text-sm font-medium text-gray-400">
+        <div className="flex items-center justify-end gap-1 sm:gap-3 text-sm font-medium text-gray-400">
           <a
             href="https://x.com/warrioraashuu/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="X"
-            className="hover:text-white transition-colors flex items-center"
+            className="hover:text-white transition-colors flex items-center p-2"
           >
             <Twitter className="w-4 h-4" />
           </a>
+          <span className="w-px h-4 bg-white/20 shrink-0" />
           <a
             href="https://github.com/codeaashu/RemoveBanana"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
-            className="hover:text-white transition-colors flex items-center gap-2"
+            className="hover:text-white transition-colors flex items-center gap-2 p-2"
           >
             <Github className="w-4 h-4" />
             <span className="hidden sm:inline">GitHub</span>

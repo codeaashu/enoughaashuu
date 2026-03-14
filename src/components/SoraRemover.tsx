@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import { Copy, Download, Link as LinkIcon, Loader2, PlayCircle, AlertCircle, Video } from "lucide-react";
+import { Copy, Download, Link as LinkIcon, Loader2, AlertCircle } from "lucide-react";
 
 export default function SoraRemover() {
     const [url, setUrl] = useState("");
@@ -33,8 +32,8 @@ export default function SoraRemover() {
             }
 
             setResult(data);
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : 'An unexpected error occurred.');
         } finally {
             setIsLoading(false);
         }
@@ -61,7 +60,7 @@ export default function SoraRemover() {
                             type="url"
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
-                            placeholder="https://sora.chatgpt.com/p/..."
+                            placeholder="https://sora.chatgpt.com/p/... or /g/gen_..."
                             className="block w-full pl-11 pr-4 py-4 bg-black/40 border border-gray-700 rounded-2xl focus:ring-2 focus:ring-fuchsia-500/50 focus:border-fuchsia-500 text-white placeholder-gray-500 transition-all outline-none"
                             required
                         />
