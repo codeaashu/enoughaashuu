@@ -36,7 +36,14 @@ export const metadata: Metadata = {
     url: "https://removebanana.aashuu.tech/",
     siteName: "RemoveBanana",
     type: "website",
-    images: ["/Banana.webp"],
+    images: [
+      {
+        url: "/Preview.png",
+        width: 1200,
+        height: 630,
+        alt: "RemoveBanana – Remove AI watermarks from Gemini images",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -44,7 +51,7 @@ export const metadata: Metadata = {
     title: "RemoveBanana",
     description:
       "Remove invisible AI watermarks from Google Gemini-generated images using reverse alpha blending mathematics.",
-    images: ["/Banana.webp"],
+    images: ["/Preview.png"],
   },
 };
 
