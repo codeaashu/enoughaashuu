@@ -168,7 +168,7 @@ export default function GeminiRemover() {
                                     />
 
                                     {/* Watermark identifier overlay simulation */}
-                                    <div className="absolute bottom-4 right-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-red-500/30 text-xs font-mono text-red-300 opacity-60">
+                                    <div className="absolute bottom-4 right-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-red-500/30 text-xs text-red-300 opacity-60">
                                         SynthID detected
                                     </div>
                                 </div>
@@ -188,7 +188,7 @@ export default function GeminiRemover() {
                                                 className="object-contain w-full h-full group-hover:scale-[1.02] transition-transform duration-700"
                                             />
                                             <div className="absolute inset-0 ring-4 ring-inset ring-green-500/20 pointer-events-none rounded-2xl" />
-                                            <div className="absolute top-4 right-4 bg-green-500/20 backdrop-blur-md px-3 py-1.5 rounded-lg border border-green-500/30 text-xs font-mono text-green-300 shadow-[0_0_15px_rgba(34,197,94,0.3)]">
+                                            <div className="absolute top-4 right-4 bg-green-500/20 backdrop-blur-md px-3 py-1.5 rounded-lg border border-green-500/30 text-xs text-green-300 shadow-[0_0_15px_rgba(34,197,94,0.3)]">
                                                 Cleaned by RemoveBanana
                                             </div>
                                         </div>

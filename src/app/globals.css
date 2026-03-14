@@ -14,18 +14,33 @@
   --card-bg: rgba(24, 24, 27, 0.7);
   --card-border: rgba(255, 255, 255, 0.1);
   --accent: #10b981;
+  --font-brand: var(--font-instrument-serif), "Instrument Serif Fallback", serif;
+}
+
+html {
+  font-family: var(--font-brand);
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-brand);
   margin: 0;
   min-height: 100vh;
   /* Add a subtle background gradient mesh for a premium look */
   background-image: radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15), transparent 25%),
                     radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.15), transparent 25%);
   background-attachment: fixed;
+}
+
+button,
+input,
+textarea,
+select,
+.font-sans,
+.font-serif,
+.font-mono {
+  font: inherit;
 }
 
 a {

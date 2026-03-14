@@ -11,7 +11,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<"gemini" | "sora">("gemini");
 
   return (
-    <main className="min-h-screen bg-black text-white selection:bg-fuchsia-500/30 font-sans overflow-x-hidden">
+    <main className="min-h-screen bg-black text-white selection:bg-fuchsia-500/30 overflow-x-hidden">
       {/* Navigation Bar */}
       <nav className="fixed top-0 w-full border-b border-white/5 bg-black/50 backdrop-blur-xl z-50">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -62,23 +62,41 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight"
+            className="mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-4 text-center text-[clamp(2.35rem,6.8vw,5.9rem)] leading-[0.95] tracking-tight"
           >
-            <span className="inline-flex items-center gap-3">
+            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
+              Remove
+            </span>
+            {/* <Image
+              src="/Google.png"
+              alt="Google"
+              width={430}
+              height={96}
+              className="h-[0.9em] w-auto shrink-0 object-contain"
+              priority
+            /> */}
+            <Image
+              src="/Gemini.gif"
+              alt="Gemini"
+              width={420}
+              height={96}
+              className="h-[0.9em] w-auto shrink-0 object-contain"
+              priority
+            />
+            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
+              Watermarks
+            </span>
+            <span className="inline-flex items-center justify-center">
               <Image
                 src="/Banana.webp"
                 alt="RemoveBanana logo"
                 width={56}
                 height={56}
-                className="h-12 w-12 md:h-14 md:w-14 rounded-xl"
+                className="h-[0.95em] w-[0.95em] rounded-xl object-cover"
                 priority
               />
-              RemoveBanana
             </span>
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-fuchsia-400">
-              Reverse Alpha Blending.
-            </span>
+
           </motion.h1>
 
           <motion.p
