@@ -79,7 +79,7 @@ Remove invisible AI watermarks from Google Gemini-generated images using reverse
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-fuchsia-500"></span>
             </span>
-            Supports: Gemini Advanced • Imagen 2 - 3 • Nano Banana
+            Supports: Gemini • Imagen 2 - 3 • Nano Banana
           </motion.div>
         </div>
       </section>
