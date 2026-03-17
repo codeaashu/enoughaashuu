@@ -3,12 +3,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Image as ImageIcon, Video, Github, Twitter } from "lucide-react";
+import { Image as ImageIcon, Video, Eraser, Github, Twitter } from "lucide-react";
 
 export default function TopNavbar() {
   const pathname = usePathname();
   const isImagePage = pathname === "/";
   const isVideoPage = pathname === "/video-remover";
+  const isBackgroundPage = pathname === "/background-remover";
 
   return (
     <nav className="fixed top-0 w-full border-b border-white/5 bg-black/50 backdrop-blur-xl z-50">
@@ -53,6 +54,20 @@ export default function TopNavbar() {
             >
               <Video className="w-5 h-5" />
               <span className="hidden sm:inline">Video Remover</span>
+            </Link>
+
+            <Link
+              href="/background-remover"
+              aria-label="Background Remover"
+              aria-current={isBackgroundPage ? "page" : undefined}
+              className={`relative flex items-center justify-center gap-2 px-2.5 sm:px-5 py-2.5 rounded-xl text-sm transition-all duration-300 ${
+                isBackgroundPage
+                  ? "text-white shadow-lg bg-gradient-to-r from-emerald-600 to-teal-500"
+                  : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
+              }`}
+            >
+              <Eraser className="w-5 h-5" />
+              <span className="hidden sm:inline">BG Remover</span>
             </Link>
           </div>
 

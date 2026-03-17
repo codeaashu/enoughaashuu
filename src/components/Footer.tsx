@@ -22,6 +22,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/background-remover" className="hover:text-white transition-colors">
+                  Background Remover
+                </Link>
+              </li>
+              <li>
                 <Link href="/blog" className="hover:text-white transition-colors">
                   Blog
                 </Link>
