@@ -3,13 +3,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Image as ImageIcon, Video, Eraser, Github, Twitter } from "lucide-react";
+import { Image as ImageIcon, Video, Eraser, Github, Twitter, Brain } from "lucide-react";
 
 export default function TopNavbar() {
   const pathname = usePathname();
   const isImagePage = pathname === "/";
   const isVideoPage = pathname === "/video-remover";
   const isBackgroundPage = pathname === "/background-remover";
+  const isAIDetectorPage = pathname === "/ai-image-detector";
 
   return (
     <nav className="fixed top-0 w-full border-b border-white/5 bg-black/50 backdrop-blur-xl z-50">
@@ -68,6 +69,20 @@ export default function TopNavbar() {
             >
               <Eraser className="w-5 h-5" />
               <span className="hidden sm:inline">BG Remover</span>
+            </Link>
+
+            <Link
+              href="/ai-image-detector"
+              aria-label="AI Image Detector"
+              aria-current={isAIDetectorPage ? "page" : undefined}
+              className={`relative flex items-center justify-center gap-2 px-2.5 sm:px-5 py-2.5 rounded-xl text-sm transition-all duration-300 ${
+                isAIDetectorPage
+                  ? "text-white shadow-lg bg-gradient-to-r from-purple-600 to-pink-500"
+                  : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
+              }`}
+            >
+              <Brain className="w-5 h-5" />
+              <span className="hidden sm:inline">AI Detector</span>
             </Link>
           </div>
 
