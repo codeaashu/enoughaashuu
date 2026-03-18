@@ -25,29 +25,35 @@ export default function TopNavbar() {
       <div
         className={isLandingPage
           ? "max-w-6xl mx-auto px-3 sm:px-5 py-2.5 rounded-2xl border border-white/10 bg-black/55 backdrop-blur-2xl shadow-[0_10px_45px_rgba(0,0,0,0.45)] flex items-center justify-between gap-3 sm:gap-4"
-          : "max-w-7xl mx-auto px-3 sm:px-6 py-2 flex items-center justify-between gap-3 sm:gap-4"
+          : "max-w-7xl mx-auto px-3 sm:px-6 py-2 flex items-center justify-center gap-3 sm:gap-4"
         }
       >
-        <Link href="/" className="flex items-center gap-2 min-w-0 shrink-0 group" aria-label="Go to home">
-          <Image
-            src="/Banana.webp"
-            alt="RemoveBanana logo"
-            width={28}
-            height={28}
-            className="h-7 w-7 rounded-md group-hover:scale-105 transition-transform duration-300"
-            priority
-          />
-          {/* <span
-            className={isLandingPage
-              ? "inline font-bold text-base sm:text-xl tracking-tight whitespace-nowrap bg-gradient-to-r from-amber-200 via-orange-200 to-pink-200 bg-clip-text text-transparent"
-              : "inline font-bold text-base sm:text-xl tracking-tight whitespace-nowrap"
-            }
-          >
-            RemoveBanana
-          </span> */}
-        </Link>
+        {isLandingPage && (
+          <Link href="/" className="flex items-center gap-2 min-w-0 shrink-0 group" aria-label="Go to home">
+            <Image
+              src="/Banana.webp"
+              alt="RemoveBanana logo"
+              width={28}
+              height={28}
+              className="h-7 w-7 rounded-md group-hover:scale-105 transition-transform duration-300"
+              priority
+            />
+            <span
+              className={isLandingPage
+                ? "inline font-bold text-base sm:text-xl tracking-tight whitespace-nowrap bg-gradient-to-r from-amber-200 via-orange-200 to-pink-200 bg-clip-text text-transparent"
+                : "inline font-bold text-base sm:text-xl tracking-tight whitespace-nowrap"
+              }
+            >
+              RemoveBanana
+            </span>
+          </Link>
+        )}
 
-        <div className="flex items-center justify-end gap-2 sm:gap-3 min-w-0 text-sm font-medium text-gray-400">
+        <div
+          className={`flex items-center gap-2 sm:gap-3 min-w-0 text-sm font-medium text-gray-400 ${
+            isLandingPage ? "justify-end" : "justify-center w-full"
+          }`}
+        >
           {!isLandingPage && (
             <div className="inline-flex p-1.5 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 overflow-x-auto max-w-[70vw]">
               <Link
