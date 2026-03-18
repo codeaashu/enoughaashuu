@@ -2,7 +2,7 @@
 
 **Clean. Detect. Generate. In Seconds.**
 
-RemoveBanana is an all-in-one toolkit that removes the hard parts, helping you clean, detect, and generate effortlessly.
+RemoveBanana is an all-in-one toolkit that removes the hard parts, so you can clean, detect, and generate in seconds.
 
 ---
 
