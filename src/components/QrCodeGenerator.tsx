@@ -443,11 +443,6 @@ export default function QrCodeGenerator() {
       <div className="pointer-events-none absolute -right-16 bottom-8 h-48 w-48 rounded-full bg-fuchsia-500/20 blur-3xl" />
 
       <div className="relative z-10">
-        <h1 className="mb-2 text-center text-2xl font-bold text-white sm:text-4xl">QR Code Generator</h1>
-        <p className="mx-auto mb-8 max-w-2xl text-center text-sm text-slate-300 sm:text-base">
-          Create text, URL, Wi-Fi, vCard, event, phone, SMS, and geo QR codes with full style controls and exports.
-        </p>
-
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           <div className="space-y-6">
             <div className="flex justify-center">
