@@ -31,6 +31,14 @@ export default function Blog() {
       date: "March 2026",
       readTime: "8 min read",
     },
+    {
+      id: "qr-code-generator",
+      title: "QR Code Generator: Create Styled QR Codes for Any Use Case",
+      excerpt:
+        "Generate QR codes for URLs, Wi-Fi, vCards, events, SMS, phone, and geo with gradients, logo upload, randomizer, and multi-format exports.",
+      date: "March 2026",
+      readTime: "6 min read",
+    },
   ];
 
   return (

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Image as ImageIcon, Video, Eraser, Github, Twitter, Brain, House } from "lucide-react";
+import { Image as ImageIcon, Video, Eraser, Github, Twitter, Brain, House, QrCode } from "lucide-react";
 
 export default function TopNavbar() {
   const pathname = usePathname();
@@ -13,6 +13,7 @@ export default function TopNavbar() {
   const isVideoPage = pathname === "/video-remover";
   const isBackgroundPage = pathname === "/background-remover";
   const isAIDetectorPage = pathname === "/ai-image-detector";
+  const isQrCodePage = pathname === "/qr-code-generator";
 
   return (
     <nav
@@ -112,6 +113,19 @@ export default function TopNavbar() {
               >
                 <Brain className="w-5 h-5" />
                 <span className="hidden sm:inline">AI Detector</span>
+              </Link>
+
+              <Link
+                href="/qr-code-generator"
+                aria-label="QR Code Generator"
+                aria-current={isQrCodePage ? "page" : undefined}
+                className={`relative flex items-center justify-center gap-2 px-3 sm:px-5 py-2.5 rounded-xl text-sm transition-all duration-300 whitespace-nowrap ${isQrCodePage
+                    ? "text-white shadow-lg bg-gradient-to-r from-cyan-600 to-blue-500"
+                    : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
+                  }`}
+              >
+                <QrCode className="w-5 h-5" />
+                <span className="hidden sm:inline">QR Generator</span>
               </Link>
             </div>
           )}
