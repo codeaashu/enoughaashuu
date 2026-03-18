@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
+import { BRAND_DESCRIPTION, BRAND_NAME } from "@/lib/brand";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "RemoveBanana",
-    short_name: "RemoveBanana",
-    description:
-      "Remove invisible AI watermarks from Google Gemini-generated images using reverse alpha blending mathematics.",
+    name: BRAND_NAME,
+    short_name: BRAND_NAME,
+    description: BRAND_DESCRIPTION,
     start_url: "/",
     display: "standalone",
     background_color: "#09090b",

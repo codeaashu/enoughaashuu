@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import TopNavbar from "@/components/TopNavbar";
 import { Github, Twitter } from "lucide-react";
+import { BRAND_DESCRIPTION, BRAND_TAGLINE } from "@/lib/brand";
 
 export default function About() {
   return (
@@ -21,7 +22,10 @@ export default function About() {
               About RemoveBanana
             </h1>
             <p className="text-xl text-gray-400 leading-relaxed">
-              A free, open-source tool built to help creators work with AI-generated media on their own terms.
+              {BRAND_TAGLINE}
+            </p>
+            <p className="text-lg text-gray-400 leading-relaxed mt-4">
+              {BRAND_DESCRIPTION}
             </p>
           </motion.div>
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Instrument_Serif } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import InstallAppPrompt from "../components/InstallAppPrompt";
+import { BRAND_DESCRIPTION, BRAND_NAME, BRAND_TAGLINE, BRAND_URL } from "@/lib/brand";
 import "./globals.css";
 
 const instrumentSerif = Instrument_Serif({
@@ -12,16 +13,18 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://removebanana.aashuu.tech"),
+  metadataBase: new URL(BRAND_URL),
   title: {
-    default: "RemoveBanana by aashuu | Remove AI Watermarks from Gemini Images",
-    template: "%s | RemoveBanana",
+    default: `${BRAND_NAME} | ${BRAND_TAGLINE}`,
+    template: `%s | ${BRAND_NAME}`,
   },
-  description:
-    "Remove invisible AI watermarks from Google Gemini, Imagen, and Sora media using reverse alpha blending mathematics. Built by aashuu.",
+  description: BRAND_DESCRIPTION,
   keywords: [
     "remove banana",
     "removebanana",
+    "a banana that removes the hard parts",
+    "ai toolkit",
+    "clean detect generate",
     "aashuu",
     "gemini watermark remover",
     "synthid remover",
@@ -29,7 +32,7 @@ export const metadata: Metadata = {
     "sora watermark remover",
     "ai watermark remover",
   ],
-  applicationName: "RemoveBanana",
+  applicationName: BRAND_NAME,
   authors: [{ name: "aashuu", url: "https://x.com/warrioraashuu/" }],
   creator: "aashuu",
   publisher: "aashuu",
@@ -54,18 +57,17 @@ export const metadata: Metadata = {
     apple: "/Banana.webp",
   },
   openGraph: {
-    title: "RemoveBanana by aashuu",
-    description:
-      "Remove invisible AI watermarks from Gemini, Imagen, and Sora media using reverse alpha blending mathematics.",
-    url: "https://removebanana.aashuu.tech/",
-    siteName: "RemoveBanana",
+    title: `${BRAND_NAME} | ${BRAND_TAGLINE}`,
+    description: BRAND_DESCRIPTION,
+    url: `${BRAND_URL}/`,
+    siteName: BRAND_NAME,
     type: "website",
     images: [
       {
         url: "/Preview.png",
         width: 1200,
         height: 630,
-        alt: "RemoveBanana – Remove AI watermarks from Gemini images",
+        alt: `${BRAND_NAME} - ${BRAND_TAGLINE}`,
       },
     ],
   },
@@ -73,9 +75,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     creator: "@warrioraashuu",
     site: "@warrioraashuu",
-    title: "RemoveBanana by aashuu",
-    description:
-      "Remove invisible AI watermarks from Gemini, Imagen, and Sora media using reverse alpha blending mathematics.",
+    title: `${BRAND_NAME} | ${BRAND_TAGLINE}`,
+    description: BRAND_DESCRIPTION,
     images: ["/Preview.png"],
   },
 };
@@ -85,8 +86,10 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "WebSite",
-      name: "RemoveBanana",
-      url: "https://removebanana.aashuu.tech",
+      name: BRAND_NAME,
+      url: BRAND_URL,
+      slogan: BRAND_TAGLINE,
+      description: BRAND_DESCRIPTION,
       inLanguage: "en",
       publisher: {
         "@type": "Person",
@@ -96,12 +99,11 @@ const jsonLd = {
     },
     {
       "@type": "SoftwareApplication",
-      name: "RemoveBanana",
+      name: BRAND_NAME,
       applicationCategory: "MultimediaApplication",
       operatingSystem: "Web",
-      url: "https://removebanana.aashuu.tech",
-      description:
-        "Remove invisible AI watermarks from Gemini, Imagen, and Sora media using reverse alpha blending mathematics.",
+      url: BRAND_URL,
+      description: BRAND_DESCRIPTION,
       author: {
         "@type": "Person",
         name: "aashuu",

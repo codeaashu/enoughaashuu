@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Github, Twitter } from "lucide-react";
+import { BRAND_TAGLINE } from "@/lib/brand";
 
 export default function Footer() {
   return (
@@ -90,6 +91,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/5 pt-8 text-center text-sm text-gray-500">
+          <p className="mb-2 text-gray-400">{BRAND_TAGLINE}</p>
           <p>© 2026 RemoveBanana by aashuu ✦</p>
         </div>
       </div>

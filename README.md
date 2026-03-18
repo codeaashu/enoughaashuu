@@ -1,6 +1,8 @@
 # <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Food%20and%20Drink/Banana.webp" alt="Banana" width="25" height="25" /> RemoveBanana
 
-**Remove invisible AI watermarks from Google Gemini-generated images using reverse alpha blending mathematics.**
+**A Banana That Removes the Hard Parts.**
+
+RemoveBanana is an all-in-one toolkit that removes the hard parts, helping you clean, detect, and generate effortlessly.
 
 ---
 
