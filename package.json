@@ -11,7 +11,6 @@
   "dependencies": {
     "@imgly/background-removal": "^1.7.0",
     "@vercel/analytics": "^2.0.1",
-    "canvas": "^3.2.1",
     "framer-motion": "^12.36.0",
     "jszip": "^3.10.1",
     "lucide-react": "^0.577.0",
