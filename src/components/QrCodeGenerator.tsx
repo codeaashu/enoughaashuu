@@ -94,7 +94,7 @@ function blobToDataUrl(blob: Blob) {
 
 export default function QrCodeGenerator() {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const previewRef = useRef<HTMLDivElement | null>(null);
+  const previewRef = useRef<HTMLButtonElement | null>(null);
   const qrRef = useRef<QRCodeInstance | null>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
 
