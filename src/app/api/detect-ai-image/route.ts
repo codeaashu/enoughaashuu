@@ -118,16 +118,53 @@ async function detectWithHuggingFace(imageBuffer: Buffer, mimeType: string): Pro
     }
 
     const predictions = (await response.json()) as HuggingFaceResponse[];
-    
-    // Process predictions - look for AI generation indicators
-    let aiConfidence = 0.5;
-    if (Array.isArray(predictions) && predictions.length > 0) {
-      // Simple heuristic based on model output
-      const result = predictions[0];
-      if (typeof result.score === 'number') {
-        aiConfidence = result.score;
-      }
+
+    if (!Array.isArray(predictions) || predictions.length === 0) {
+      return {
+        confidence: 0,
+        label: "Unable to analyze (empty Hugging Face response)",
+        processing_time: Date.now() - startTime,
+        available: false,
+      };
     }
+
+    const labels = predictions
+      .map((entry) => String(entry.label || "").toLowerCase())
+      .filter(Boolean);
+
+    const hasNsfwLabels = labels.includes("normal") && labels.includes("nsfw");
+    if (hasNsfwLabels) {
+      return {
+        confidence: 0,
+        label: "Excluded from AI vote (NSFW model output)",
+        processing_time: Date.now() - startTime,
+        available: false,
+      };
+    }
+
+    const aiLabel = predictions.find((entry) => {
+      const label = String(entry.label || "").toLowerCase();
+      return label.includes("ai") || label.includes("generated") || label.includes("synthetic") || label.includes("fake");
+    });
+
+    const realLabel = predictions.find((entry) => {
+      const label = String(entry.label || "").toLowerCase();
+      return label.includes("real") || label.includes("authentic") || label.includes("human") || label.includes("natural");
+    });
+
+    const aiScore = typeof aiLabel?.score === "number" ? aiLabel.score : null;
+    const realScore = typeof realLabel?.score === "number" ? realLabel.score : null;
+
+    if (aiScore === null && realScore === null) {
+      return {
+        confidence: 0,
+        label: "Excluded from AI vote (model does not provide AI/real classes)",
+        processing_time: Date.now() - startTime,
+        available: false,
+      };
+    }
+
+    const aiConfidence = aiScore !== null ? aiScore : Math.max(0, Math.min(1, 1 - (realScore || 0.5)));
 
     return {
       confidence: aiConfidence,
@@ -160,15 +197,13 @@ async function analyzeMetadata(imageBuffer: Buffer, file: File): Promise<{
     const fileSize = file.size;
     const fileType = file.type;
 
-    // Heuristic analysis
-    if (!file.lastModified || Date.now() - file.lastModified < 3600000) {
-      findings.push("File recently created or modified");
-    }
-
     // Check for common AI tool markers in filename
     const aiToolMarkers = ["ai", "generated", "dall-e", "midjourney", "stable", "craiyon"];
+    let suspiciousSignals = 0;
+
     if (aiToolMarkers.some((marker) => fileName.includes(marker))) {
-      findings.push("Filename contains AI tool reference");
+      findings.push("Filename contains potential AI tool marker");
+      suspiciousSignals += 1;
     }
 
     // Analyze entropy (very basic)
@@ -184,20 +219,22 @@ async function analyzeMetadata(imageBuffer: Buffer, file: File): Promise<{
       entropy -= p * Math.log2(p);
     }
 
-    // High entropy suggests compression/noise patterns
-    if (entropy > 7.5) {
-      findings.push("High entropy detected - characteristic of compressed/noise");
+    // Entropy is a weak signal and should not dominate the verdict.
+    if (entropy > 7.9) {
+      findings.push("High entropy pattern detected (weak signal)");
+      suspiciousSignals += 1;
     }
 
-    // Check file size vs dimensions (roughly)
-    if (fileSize < 50000) {
-      findings.push("Small file size - may indicate compression artifacts");
+    // Very small files can indicate heavy compression (weak signal).
+    if (fileSize < 20000) {
+      findings.push("Very small file size detected (weak signal)");
+      suspiciousSignals += 1;
     }
 
-    // Calculate confidence based on findings
-    let confidence = 0.3; // Base confidence
-    if (findings.length > 0) {
-      confidence = Math.min(0.7, 0.3 + findings.length * 0.15);
+    // Keep metadata confidence conservative to reduce false positives.
+    let confidence = 0.08;
+    if (suspiciousSignals > 0) {
+      confidence = Math.min(0.45, 0.08 + suspiciousSignals * 0.12);
     }
 
     if (findings.length === 0) {
@@ -212,7 +249,7 @@ async function analyzeMetadata(imageBuffer: Buffer, file: File): Promise<{
   } catch (error) {
     console.error("Metadata analysis error:", error);
     return {
-      confidence: 0.3,
+      confidence: 0.08,
       findings: ["Metadata analysis failed"],
       processing_time: Date.now() - startTime,
     };
@@ -277,13 +314,16 @@ export async function POST(request: Request) {
       ? weightedNumerator / weightedDenominator
       : metadataResult.confidence;
 
+    const activeEngines = Number(sightengineResult.available) + Number(huggingfaceResult.available);
+    const aiThreshold = activeEngines >= 1 ? 0.65 : 0.8;
+
     // Get image size
     const fileSizeMB = (imageFile.size / (1024 * 1024)).toFixed(2);
     const fileSize = `${fileSizeMB} MB`;
 
     return NextResponse.json({
       overall_confidence: Math.min(1, Math.max(0, weightedScore)),
-      is_ai_generated: weightedScore > 0.5,
+      is_ai_generated: weightedScore >= aiThreshold,
       analysis: {
         sightengine: sightengineResult,
         huggingface_vit: huggingfaceResult,
