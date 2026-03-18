@@ -6,7 +6,6 @@ import { Github, Twitter } from "lucide-react";
 import TopNavbar from "@/components/TopNavbar";
 import GeminiRemover from "@/components/GeminiRemover";
 import Footer from "@/components/Footer";
-import { BRAND_DESCRIPTION, BRAND_TAGLINE } from "@/lib/brand";
 
 export default function Home() {
   return (
@@ -21,14 +20,6 @@ export default function Home() {
         </div>
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-sm md:text-base uppercase tracking-[0.2em] text-blue-300/80 mb-5"
-          >
-            {BRAND_TAGLINE}
-          </motion.p>
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -58,7 +49,8 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
-            {BRAND_DESCRIPTION}
+            Remove invisible AI watermarks from Google Gemini-generated images using reverse alpha blending mathematics.
+            A fast, secure, and lossless workflow that runs directly in your browser.
           </motion.p>
         </div>
         <div className="flex flex-col items-center">
