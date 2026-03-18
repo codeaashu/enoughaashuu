@@ -76,7 +76,7 @@ export default function LandingPage() {
         }}
       >
         <img
-          src="/banana.webp"
+          src="/Banana.webp"
           alt="banana cursor"
           className="w-8 h-8 drop-shadow-lg"
           draggable={false}
@@ -89,12 +89,8 @@ export default function LandingPage() {
       <section className="pt-44 md:pt-40 pb-24 px-6 relative">
         {/* Background Gradients */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[400px] opacity-20 pointer-events-none">
-          <div 
+          <div
             className="absolute inset-0 blur-[100px] rounded-full mix-blend-screen animated-gradient"
-            //             className="absolute inset-0 blur-[100px] rounded-full mix-blend-screen"
-            // style={{
-            //   background: "linear-gradient(to right, #ef4444 0%, #fbbf24 25%, #f97316 50%, #ec4899 75%, #a855f7 100%)"
-            // }}
           />
         </div>
 
