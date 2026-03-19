@@ -37,6 +37,22 @@ export default function BackgroundRemoverPage() {
             apply transparent or custom backgrounds, and export single PNG files or ZIP batches.
           </motion.p>
 
+          <div className="flex flex-col items-center">
+          <a
+            href="https://peerlist.io/aashuu/project/removebanana"
+            target="_blank"
+            rel="noreferrer"
+            className="mb-4"
+            aria-label="RemoveBanana on Peerlist"
+          >
+            <img
+              src="https://peerlist.io/api/v1/projects/embed/PRJHNN7JQ6QA9KKLJ1OA9AK8O9AQP8?showUpvote=true&theme=dark"
+              alt="RemoveBanana"
+              style={{ width: "auto", height: "72px" }}
+            />
+          </a>
+          </div>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
