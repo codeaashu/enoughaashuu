@@ -1,5 +1,7 @@
 # <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Food%20and%20Drink/Banana.webp" alt="Banana" width="25" height="25" /> RemoveBanana
 
+<img width="1777" height="844" alt="Screenshot 2026-03-19 at 12 07 12 PM" src="https://github.com/user-attachments/assets/c2652a28-a17c-46b5-a994-7d4bf46dc07c" />
+
 **Clean. Detect. Generate. In Seconds.**
 
 RemoveBanana is an all-in-one toolkit that removes the hard parts, so you can clean, detect, and generate in seconds.
