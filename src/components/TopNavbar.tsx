@@ -163,7 +163,7 @@ export default function TopNavbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Sponsor RemoveBanana"
-                className="inline-flex items-center gap-2 rounded-full border border-orange-300/35 bg-gradient-to-r from-orange-500/60 via-pink-500/60 to-violet-500/60 px-4 py-2.5 text-white shadow-[0_8px_24px_rgba(236,72,153,0.35)] hover:brightness-110 transition-all duration-300"
+                className="inline-flex items-center gap-2 rounded-full border border-orange-300/35 bg-gradient-to-r from-orange-500/15 via-pink-500/15 to-violet-500/15 px-4 py-2.5 text-white  hover:brightness-110 transition-all duration-300"
               >
                 <Image
                   src="/Soft Ice Cream.webp"
