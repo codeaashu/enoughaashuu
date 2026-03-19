@@ -4,23 +4,69 @@
 
 RemoveBanana is an all-in-one toolkit that removes the hard parts, so you can clean, detect, and generate in seconds.
 
----
+- Remove Gemini and Imagen watermarks from images
+- Extract clean MP4 links from shared Sora videos
+- Remove image backgrounds locally in the browser
+- Detect AI-generated images with a hybrid voting pipeline
+- Generate styled QR codes for multiple payload types
 
-## What is this?
+Live site: https://removebanana.aashuu.tech
 
-Google's AI image generators (Gemini, Imagen 2, Imagen 3, Nano Banana) embed invisible **SynthID** watermarks into every generated image. These watermarks are invisible to the human eye but can be detected by automated systems.
+## Feature Overview
 
-RemoveBanana uses the **exact mathematical inverse** of Google's alpha blending formula to perfectly reconstruct the original pixels — no AI guessing, no quality loss.
+| Tool | Route | What it does | Processing model |
+| --- | --- | --- | --- |
+| Gemini/Image Watermark Remover | /image-remover | Removes Gemini/Imagen/Nano Banana watermarking using reverse alpha blending | Client-side |
+| Sora Video Remover | /video-remover | Accepts Sora links and extracts clean MP4 + prompt | Server route fetch + parsing |
+| Background Remover | /background-remover | Removes background from one or many images, supports recolor/recompose and ZIP export | Client-side AI model |
+| AI Image Detector | /ai-image-detector | Multi-engine AI-image detection with weighted voting and JSON export | Server route + external APIs + metadata analysis |
+| QR Generator | /qr-code-generator | Styled QR generation for URL/text/Wi-Fi/vCard/event/phone/SMS/geo with PNG/JPEG/SVG export | Client-side |
 
+## Product Notes
 
+### Image Watermark Removal
 
-## Supported Models
+- Uses reverse alpha blending (see src/lib/watermark.ts)
+- Auto-selects watermark config (48px vs 96px pattern)
+- In-browser processing for private local workflow
 
-- ✅ Google Gemini (all versions)
-- ✅ Imagen 2
-- ✅ Imagen 3
-- ✅ Nano Banana AI
+### Sora Workflow
 
-## Contributing
+- Supports public Sora links
+- Handles both /p/ shared links and /g/gen_* pattern with fallback extraction
+- Returns extracted prompt and direct MP4 URL for download
 
-Contributions are welcome! Please open an issue or submit a pull request on [GitHub](https://github.com/codeaashu/RemoveBanana).
+### Background Removal Workflow
+
+- Multi-file queue with per-card status
+- Local model warm-up and progress tracking
+- Output controls: transparent background, solid color, custom image background
+- Single image PNG download + ZIP batch export
+
+### AI Detector Workflow
+
+- Ensemble of:
+  Sightengine GenAI classifier, Hugging Face inference model, and local metadata heuristic analysis
+- Weighted scoring with thresholding
+- Full downloadable JSON report from UI
+
+### QR Generator Workflow
+
+- Payload types: text/URL, Wi-Fi, vCard, event, phone, SMS, geo
+- Style controls: gradients, dot styles, corner styles, logo upload, randomizer
+- Export: PNG, JPEG, SVG
+- Extra actions: copy image, embed code, print
+
+## Security and Privacy
+
+- Most heavy media workflows are browser-side by design
+- Install prompt uses localStorage-based dismiss window
+- Service worker is pass-through (installability-oriented)
+- Background remover route has COOP/COEP headers via next.config.ts
+
+## SEO and PWA
+
+- Centralized brand metadata in src/lib/brand.ts
+- Rich metadata in src/app/layout.tsx
+- robots.ts + sitemap.ts configured for production domain
+- Web app manifest via src/app/manifest.ts
