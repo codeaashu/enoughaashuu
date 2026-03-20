@@ -1,0 +1,27 @@
+# dependencies
+/node_modules
+
+# testing
+/coverage
+
+# production
+/build
+/dist
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env
+.env.local
+
+# typescript
+*.tsbuildinfo
+
+# cloudflare
+.wrangler
+.dev.vars
