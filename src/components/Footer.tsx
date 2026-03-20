@@ -39,6 +39,11 @@ export default function Footer() {
                   QR Generator
                 </Link>
               </li>
+              <li>
+                <Link href="/iconlogo" className="hover:text-white transition-colors">
+                  IconLogo
+                </Link>
+              </li>
             </ul>
           </div>
 

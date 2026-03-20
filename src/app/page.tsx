@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
-import { Image as ImageIcon, Video, Eraser, Brain, QrCode, Sparkles } from "lucide-react";
+import { Image as ImageIcon, Video, Eraser, Brain, QrCode, Shapes } from "lucide-react";
 import TopNavbar from "@/components/TopNavbar";
 import Footer from "@/components/Footer";
 import Loader from "@/components/Loader";
@@ -44,6 +43,13 @@ const tools = [
     icon: QrCode,
     href: "/qr-code-generator",
     color: "from-cyan-600 to-blue-500",
+  },
+  {
+    name: "IconLogo",
+    description: "Create icon-based logos with a full studio workflow and quick exports.",
+    icon: Shapes,
+    href: "/iconlogo",
+    color: "from-orange-600 to-amber-500",
   },
 ];
 
