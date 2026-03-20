@@ -57,7 +57,7 @@ export function ShareButton() {
   const handleShareOnX = () => {
     if (!shareUrl) return;
     const text = encodeURIComponent(
-      `Check out the logo I made with @enoughaashuu !\n\nEdit here: ${shareUrl}`,
+      `Check out the logo I made with @enoughaashuu!\n\nEdit here: ${shareUrl}`,
     );
     const url = `https://twitter.com/intent/tweet?text=${text}`;
     window.open(url, "_blank");
