@@ -4,6 +4,7 @@ import { Tooltip } from "@heroui/react";
 import type { LogoState } from "#/domain/logo/logo.types";
 import { loadLogoFromState } from "#/commands/logo/load-logo";
 import { CollectionsButton } from "#/features/collections/CollectionsButton";
+import { ShareButton } from "#/features/share/ShareButton";
 import { EditorPage } from "./EditorPage";
 import { FABs } from "./FABs";
 import { MobileTopBar } from "./MobileTopBar";
@@ -89,6 +90,9 @@ export function AppShell({
                 <p>Discover the other tools.</p>
               </Tooltip.Content>
             </Tooltip>
+          </motion.div>
+          <motion.div variants={itemVariants}>
+            <ShareButton />
           </motion.div>
           <motion.div variants={itemVariants}>
             <CollectionsButton />
