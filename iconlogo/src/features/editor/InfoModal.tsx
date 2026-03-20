@@ -27,7 +27,7 @@ export function InfoModal({ isOpen, onClose, defaultTab, highlightLatest }: Info
           <Modal.Dialog>
             <Modal.CloseTrigger />
             <Modal.Body className="p-0">
-              <img src="/logo512.png" alt="IconLogo" className="w-16 h-16" />
+              <img src="/iconlogo/logo512.png" alt="IconLogo" className="w-16 h-16" />
 
               <Tabs className="w-full mt-6" defaultSelectedKey={defaultTab ?? "about"}>
                 <Tabs.ListContainer>

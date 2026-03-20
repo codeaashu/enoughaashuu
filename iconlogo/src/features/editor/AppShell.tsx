@@ -65,7 +65,7 @@ export function AppShell({
         <FABs />
         <motion.div
           variants={containerVariants}
-          initial="hidden"
+          initial={false}
           animate="visible"
           className="absolute bottom-4 right-4 z-50 flex flex-col gap-2 items-end"
         >

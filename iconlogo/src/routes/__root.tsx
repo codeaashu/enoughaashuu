@@ -41,9 +41,9 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     links: [
       { rel: 'stylesheet', href: appCss },
       { rel: 'canonical', href: SEO.canonical },
-      { rel: 'manifest', href: '/manifest.json' },
-      { rel: 'icon', href: '/favicon.ico' },
-      { rel: 'apple-touch-icon', href: '/logo192.png' },
+      { rel: 'manifest', href: '/iconlogo/manifest.json' },
+      { rel: 'icon', href: '/iconlogo/favicon.ico' },
+      { rel: 'apple-touch-icon', href: '/iconlogo/logo192.png' },
     ],
   }),
   shellComponent: RootDocument,

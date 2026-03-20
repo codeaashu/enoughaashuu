@@ -44,13 +44,13 @@ const tools = [
     href: "/qr-code-generator",
     color: "from-cyan-600 to-blue-500",
   },
-  {
-    name: "IconLogo",
-    description: "Create icon-based logos with a full studio workflow and quick exports.",
-    icon: Shapes,
-    href: "/iconlogo",
-    color: "from-orange-600 to-amber-500",
-  },
+  // {
+  //   name: "IconLogo",
+  //   description: "Create icon-based logos with a full studio workflow and quick exports.",
+  //   icon: Shapes,
+  //   href: "/iconlogo",
+  //   color: "from-orange-600 to-amber-500",
+  // },
 ];
 
 export default function LandingPage() {

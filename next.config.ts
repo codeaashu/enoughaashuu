@@ -2,16 +2,30 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   async rewrites() {
-    if (process.env.NODE_ENV !== "development") {
-      return [];
+    const devTarget = "http://localhost:5173";
+    const prodTarget = process.env.ICONLOGO_PROXY_TARGET;
+    const target = process.env.NODE_ENV === "development" ? devTarget : prodTarget;
+
+    if (!target) {
+      return {
+        beforeFiles: [],
+      };
     }
 
-    return [
-      {
-        source: "/iconlogo-app/:path*",
-        destination: "http://127.0.0.1:5173/:path*",
-      },
-    ];
+    const normalizedTarget = target.replace(/\/$/, "");
+
+    return {
+      beforeFiles: [
+        {
+          source: "/iconlogo",
+          destination: `${normalizedTarget}/iconlogo/`,
+        },
+        {
+          source: "/iconlogo/:path*",
+          destination: `${normalizedTarget}/iconlogo/:path*`,
+        },
+      ],
+    };
   },
 
   async headers() {

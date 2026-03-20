@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:iconlogo": "npm --prefix ./iconlogo run dev -- --host localhost --port 5173",
+    "dev:all": "concurrently -n removebanana,iconlogo -c cyan,magenta \"npm run dev\" \"npm run dev:iconlogo\"",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
@@ -22,6 +24,7 @@
     "styled-components": "^6.3.11"
   },
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

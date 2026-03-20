@@ -9,7 +9,7 @@ export function TextModeToggle() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
       className="hidden md:block fixed bottom-[4.5rem] left-1/2 z-50 -translate-x-1/2 md:bottom-[4.75rem]"

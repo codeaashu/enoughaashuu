@@ -48,7 +48,7 @@ const GRADIENTS = [
 
 function cardVariants(delay = 0) {
   return {
-    initial: { opacity: 0, y: 24 },
+    initial: false,
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true, margin: '-60px' },
     transition: { duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] as const },
@@ -245,7 +245,7 @@ export function BentoGrid() {
   return (
     <section id="features" className="px-4 pb-24 max-w-5xl mx-auto scroll-mt-16">
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
+        initial={false}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-60px' }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}

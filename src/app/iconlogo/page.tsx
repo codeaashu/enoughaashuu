@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function IconLogoPage() {
   const iframeSrc =
     process.env.NODE_ENV === "development"
-      ? "http://127.0.0.1:5173"
+      ? "http://localhost:5173"
       : process.env.NEXT_PUBLIC_ICONLOGO_URL;
 
   return (

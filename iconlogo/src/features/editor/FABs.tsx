@@ -50,7 +50,7 @@ export function FABs() {
   return (
     <motion.div
       variants={containerVariants}
-      initial="hidden"
+      initial={false}
       animate="visible"
       className="pointer-events-auto absolute bottom-4 left-4 z-20 flex flex-col items-start gap-2"
     >

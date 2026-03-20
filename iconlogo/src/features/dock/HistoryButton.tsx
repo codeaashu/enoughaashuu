@@ -31,7 +31,7 @@ export function HistoryButton() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 72 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
       className="flex items-center rounded-2xl border border-border bg-surface/90 px-2 py-2 shadow-xl backdrop-blur-xl"

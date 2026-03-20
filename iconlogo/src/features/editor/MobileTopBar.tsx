@@ -34,7 +34,7 @@ export function MobileTopBar() {
     <div className="fixed top-0 inset-x-0 z-50 flex items-center justify-between px-4 pt-4 md:hidden">
       <button type="button" onClick={() => setInfoOpen(true)}>
         <img
-          src="/logo512.png"
+          src="/iconlogo/logo512.png"
           alt="iconlogo.dev"
           width={40}
           height={40}
