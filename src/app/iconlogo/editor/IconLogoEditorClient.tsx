@@ -10,13 +10,46 @@ export default function IconLogoEditorClient() {
   const [sharedLogo, setSharedLogo] = useState<LogoState | null>(null);
 
   useEffect(() => {
-    const raw = new URLSearchParams(window.location.search).get("s");
-    if (!raw) return;
-    try {
-      setSharedLogo(sanitizeLogoState(JSON.parse(decodeURIComponent(raw))));
-    } catch {
-      setSharedLogo(null);
-    }
+    const resolveSharedLogo = async () => {
+      const raw = new URLSearchParams(window.location.search).get("s");
+      if (!raw) return;
+
+      // New format: short id, e.g. ?s=fsfOMX
+      if (/^[A-Za-z0-9_-]{4,16}$/.test(raw)) {
+        try {
+          const response = await fetch(`/api/iconlogo/share/${raw}`, {
+            method: "GET",
+            cache: "no-store",
+          });
+
+          if (!response.ok) {
+            setSharedLogo(null);
+            return;
+          }
+
+          const data = (await response.json()) as { logo?: unknown };
+          if (!data.logo) {
+            setSharedLogo(null);
+            return;
+          }
+
+          setSharedLogo(sanitizeLogoState(data.logo));
+          return;
+        } catch {
+          setSharedLogo(null);
+          return;
+        }
+      }
+
+      // Legacy format: encoded JSON in query param
+      try {
+        setSharedLogo(sanitizeLogoState(JSON.parse(decodeURIComponent(raw))));
+      } catch {
+        setSharedLogo(null);
+      }
+    };
+
+    void resolveSharedLogo();
   }, []);
 
   return (
