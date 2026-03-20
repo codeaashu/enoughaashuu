@@ -8,7 +8,7 @@ import { trackEvent } from "#/lib/analytics";
 import { useChangelogStatus } from "#/queries/changelog/use-changelog-status";
 import { InfoModal } from "./InfoModal";
 
-const FEEDBACK_URL = "https://x.com/warrioraashuu";
+const FEEDBACK_URL = "https://x.com/enoughaashuu";
 const ICECREAM_URL = "https://buymeacoffee.com/aashuu";
 
 const containerVariants: Variants = {

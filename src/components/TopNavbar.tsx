@@ -153,7 +153,7 @@ export default function TopNavbar() {
           {isLandingPage && (
             <>
               <a
-                href="https://x.com/warrioraashuu/"
+                href="https://x.com/enoughaashuu/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="X"

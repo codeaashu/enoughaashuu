@@ -95,7 +95,7 @@ export default function TermsOfService() {
               <section>
                 <h2 className="text-2xl font-semibold text-white mb-4">9. Contact</h2>
                 <p>
-                  For questions about these Terms, visit our contact page or reach out on X @warrioraashuu.
+                  For questions about these Terms, visit our contact page or reach out on X @enoughaashuu.
                 </p>
               </section>
             </div>
