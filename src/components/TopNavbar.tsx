@@ -84,6 +84,45 @@ export default function TopNavbar() {
               </Link>
 
               <Link
+                href="/iconlogo"
+                aria-label="IconLogo"
+                aria-current={isIconLogoPage ? "page" : undefined}
+                className={`relative flex flex-1 min-w-0 items-center justify-center gap-0 md:gap-2 px-2 md:px-5 py-2.5 rounded-xl text-sm transition-all duration-300 whitespace-nowrap ${isIconLogoPage
+                    ? "text-white shadow-lg bg-gradient-to-r from-orange-600 to-amber-500"
+                    : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
+                  }`}
+              >
+                <Shapes className="w-5 h-5" />
+                <span className="hidden lg:inline">IconLogo</span>
+              </Link>
+
+              <Link
+                href="/qr-code-generator"
+                aria-label="QR Code Generator"
+                aria-current={isQrCodePage ? "page" : undefined}
+                className={`relative flex flex-1 min-w-0 items-center justify-center gap-0 md:gap-2 px-2 md:px-5 py-2.5 rounded-xl text-sm transition-all duration-300 whitespace-nowrap ${isQrCodePage
+                    ? "text-white shadow-lg bg-gradient-to-r from-cyan-600 to-blue-500"
+                    : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
+                  }`}
+              >
+                <QrCode className="w-5 h-5" />
+                <span className="hidden lg:inline">QR Generator</span>
+              </Link>
+
+              <Link
+                href="/ai-image-detector"
+                aria-label="AI Image Detector"
+                aria-current={isAIDetectorPage ? "page" : undefined}
+                className={`relative flex flex-1 min-w-0 items-center justify-center gap-0 md:gap-2 px-2 md:px-5 py-2.5 rounded-xl text-sm transition-all duration-300 whitespace-nowrap ${isAIDetectorPage
+                    ? "text-white shadow-lg bg-gradient-to-r from-purple-600 to-pink-500"
+                    : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
+                  }`}
+              >
+                <Brain className="w-5 h-5" />
+                <span className="hidden lg:inline">AI Detector</span>
+              </Link>
+
+              <Link
                 href="/video-remover"
                 aria-label="Video Remover"
                 aria-current={isVideoPage ? "page" : undefined}
@@ -107,45 +146,6 @@ export default function TopNavbar() {
               >
                 <Eraser className="w-5 h-5" />
                 <span className="hidden lg:inline">BG Remover</span>
-              </Link>
-
-              <Link
-                href="/ai-image-detector"
-                aria-label="AI Image Detector"
-                aria-current={isAIDetectorPage ? "page" : undefined}
-                className={`relative flex flex-1 min-w-0 items-center justify-center gap-0 md:gap-2 px-2 md:px-5 py-2.5 rounded-xl text-sm transition-all duration-300 whitespace-nowrap ${isAIDetectorPage
-                    ? "text-white shadow-lg bg-gradient-to-r from-purple-600 to-pink-500"
-                    : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
-                  }`}
-              >
-                <Brain className="w-5 h-5" />
-                <span className="hidden lg:inline">AI Detector</span>
-              </Link>
-
-              <Link
-                href="/qr-code-generator"
-                aria-label="QR Code Generator"
-                aria-current={isQrCodePage ? "page" : undefined}
-                className={`relative flex flex-1 min-w-0 items-center justify-center gap-0 md:gap-2 px-2 md:px-5 py-2.5 rounded-xl text-sm transition-all duration-300 whitespace-nowrap ${isQrCodePage
-                    ? "text-white shadow-lg bg-gradient-to-r from-cyan-600 to-blue-500"
-                    : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
-                  }`}
-              >
-                <QrCode className="w-5 h-5" />
-                <span className="hidden lg:inline">QR Generator</span>
-              </Link>
-
-              <Link
-                href="/iconlogo"
-                aria-label="IconLogo"
-                aria-current={isIconLogoPage ? "page" : undefined}
-                className={`relative flex flex-1 min-w-0 items-center justify-center gap-0 md:gap-2 px-2 md:px-5 py-2.5 rounded-xl text-sm transition-all duration-300 whitespace-nowrap ${isIconLogoPage
-                    ? "text-white shadow-lg bg-gradient-to-r from-orange-600 to-amber-500"
-                    : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
-                  }`}
-              >
-                <Shapes className="w-5 h-5" />
-                <span className="hidden lg:inline">IconLogo</span>
               </Link>
             </div>
           )}
