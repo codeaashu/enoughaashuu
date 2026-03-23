@@ -200,34 +200,19 @@ export default function LandingPage() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="flex flex-col items-center"
             >
-              <div className="flex flex-col items-center">
-                <a
-                  href="https://peerlist.io/aashuu/project/enough-aashuu"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-block hover:scale-[1.02] transition-transform shadow-[0_0_30px_rgba(0,0,0,0.5)] rounded-xl"
-                  aria-label="Enough Aashuu Project Spotlight Badge"
-                >
-                  <img
-                    src="https://dqy38fnwh4fqs.cloudfront.net/website/project-spotlight/project-week-rank-one-dark.svg"
-                    alt="enough aashuu"
-                    style={{ width: "auto", height: "64px" }}
-                  />
-                </a>
-                <a
-                  href="https://peerlist.io/aashuu/project/enough-aashuu"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-block hover:scale-[1.02] transition-transform shadow-[0_0_30px_rgba(0,0,0,0.5)] rounded-xl mt-3"
-                  aria-label="Enough Aashuu on Peerlist"
-                >
-                  <img
-                    src="https://peerlist.io/api/v1/projects/embed/PRJHNN7JQ6QA9KKLJ1OA9AK8O9AQP8?showUpvote=true&theme=dark"
-                    alt="enough aashuu"
-                    style={{ width: "auto", height: "72px" }}
-                  />
-                </a>
-              </div>
+              <a
+                href="https://peerlist.io/aashuu/project/enough-aashuu"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-block hover:scale-[1.02] transition-transform shadow-[0_0_30px_rgba(0,0,0,0.5)] rounded-xl"
+                aria-label="Enough Aashuu on Peerlist"
+              >
+                <img
+                  src="https://peerlist.io/api/v1/projects/embed/PRJHNN7JQ6QA9KKLJ1OA9AK8O9AQP8?showUpvote=true&theme=dark"
+                  alt="enough aashuu"
+                  style={{ width: "auto", height: "72px" }}
+                />
+              </a>
             </motion.div>
           </div>
 

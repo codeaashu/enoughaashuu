@@ -52,40 +52,25 @@ export default function Home() {
             A fast, secure, and lossless workflow that runs directly in your browser.
           </motion.p>
         </div>
-        <div className="flex flex-col items-center mb-12">
-          <div className="flex flex-col items-center">
-            <a
-              href="https://peerlist.io/aashuu/project/enough-aashuu"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-block hover:scale-[1.02] transition-transform shadow-[0_0_30px_rgba(0,0,0,0.5)] rounded-xl"
-              aria-label="Enough Aashuu Project Spotlight Badge"
-            >
-              <img
-                src="https://dqy38fnwh4fqs.cloudfront.net/website/project-spotlight/project-week-rank-one-dark.svg"
-                alt="enough aashuu"
-                style={{ width: "auto", height: "64px" }}
-              />
-            </a>
-            <a
-              href="https://peerlist.io/aashuu/project/enough-aashuu"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-block hover:scale-[1.02] transition-transform shadow-[0_0_30px_rgba(0,0,0,0.5)] rounded-xl mt-3"
-              aria-label="Enough Aashuu on Peerlist"
-            >
-              <img
-                src="https://peerlist.io/api/v1/projects/embed/PRJHNN7JQ6QA9KKLJ1OA9AK8O9AQP8?showUpvote=true&theme=dark"
-                alt="enough aashuu"
-                style={{ width: "auto", height: "72px" }}
-              />
-            </a>
-          </div>
+        <div className="flex flex-col items-center">
+          <a
+            href="https://peerlist.io/aashuu/project/enough-aashuu"
+            target="_blank"
+            rel="noreferrer"
+            className="mb-4"
+            aria-label="Enough Aashuu on Peerlist"
+          >
+            <img
+              src="https://peerlist.io/api/v1/projects/embed/PRJHNN7JQ6QA9KKLJ1OA9AK8O9AQP8?showUpvote=true&theme=dark"
+              alt="enough aashuu"
+              style={{ width: "auto", height: "72px" }}
+            />
+          </a>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm md:text-base text-gray-300 mb-8 mt-8"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm md:text-base text-gray-300 mb-8"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75"></span>
