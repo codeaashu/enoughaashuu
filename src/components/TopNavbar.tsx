@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Image as ImageIcon, Video, Eraser, Github, Twitter, Brain, House, QrCode, Shapes } from "lucide-react";
+import { Image as ImageIcon, Video, Eraser, Github, Twitter, Brain, House, QrCode, Shapes, Pin } from "lucide-react";
 
 export default function TopNavbar() {
   const pathname = usePathname();
@@ -15,6 +15,7 @@ export default function TopNavbar() {
   const isAIDetectorPage = pathname === "/ai-image-detector";
   const isQrCodePage = pathname === "/qr-code-generator";
   const isIconLogoPage = pathname === "/iconlogo";
+  const isCorkboardPage = pathname?.startsWith("/corkboard");
 
   return (
     <nav
@@ -94,6 +95,19 @@ export default function TopNavbar() {
               >
                 <Shapes className="w-5 h-5" />
                 <span className="hidden lg:inline">IconLogo</span>
+              </Link>
+
+              <Link
+                href="/corkboard"
+                aria-label="Corkboard"
+                aria-current={isCorkboardPage ? "page" : undefined}
+                className={`relative flex flex-1 min-w-0 items-center justify-center gap-0 md:gap-2 px-2 md:px-5 py-2.5 rounded-xl text-sm transition-all duration-300 whitespace-nowrap ${isCorkboardPage
+                    ? "text-white shadow-lg bg-gradient-to-r from-red-600 to-pink-600"
+                    : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
+                  }`}
+              >
+                <Pin className="w-5 h-5" />
+                <span className="hidden lg:inline">Corkboard</span>
               </Link>
 
               <Link

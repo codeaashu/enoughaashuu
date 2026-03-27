@@ -21,6 +21,7 @@
     "@tanstack/react-virtual": "^3.13.23",
     "@vercel/analytics": "^2.0.1",
     "framer-motion": "^12.36.0",
+    "html2canvas": "^1.4.1",
     "immer": "^11.1.4",
     "jszip": "^3.10.1",
     "lucide-react": "^0.577.0",

@@ -13,7 +13,7 @@ export default function VideoRemoverPage() {
 
       <section className="pt-44 md:pt-36 pb-20 px-6 relative">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[400px] opacity-20 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-500 to-blue-500 blur-[100px] rounded-full mix-blend-screen" />
+          <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-blue-500 blur-[100px] rounded-full mix-blend-screen" />
         </div>
 
         <div className="max-w-4xl mx-auto text-center relative z-10">

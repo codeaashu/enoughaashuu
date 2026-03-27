@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Image as ImageIcon, Video, Eraser, Brain, QrCode, Shapes } from "lucide-react";
+import { Image as ImageIcon, Video, Eraser, Brain, QrCode, Shapes, Pin } from "lucide-react";
 import TopNavbar from "@/components/TopNavbar";
 import Footer from "@/components/Footer";
 import Loader from "@/components/Loader";
@@ -22,6 +22,13 @@ const tools = [
     icon: Shapes,
     href: "/iconlogo",
     color: "from-orange-600 to-amber-500",
+  },
+  {
+    name: "Corkboard",
+    description: "A digital photo corkboard for organizing memories. Drag and drop photos, apply retro filters, add captions, and export high-resolution collages.",
+    icon: Pin,
+    href: "/corkboard",
+    color: "from-amber-700 to-orange-500",
   },
   {
     name: "QR Generator",
