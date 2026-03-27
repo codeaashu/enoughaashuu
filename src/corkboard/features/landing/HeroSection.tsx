@@ -65,10 +65,10 @@ export function HeroSection() {
             <Button
               size="lg"
               variant="ghost"
-              className="font-semibold px-8 gap-2 text-white bg-gradient-to-r from-red-600 to-pink-600 hover:brightness-110 rounded-full whitespace-nowrap flex items-center text-base"
+              className="font-semibold px-8 gap-2 text-white bg-gradient-to-r from-red-600 to-pink-600 hover:brightness-110 rounded-full"
             >
-              <span className="">Open Web Editor</span>
-              <Icon icon="lucide:arrow-right" width={20} />
+              Open Web Editor
+              <Icon icon="lucide:arrow-right" width={16} />
             </Button>
           </a>
         </motion.div>
