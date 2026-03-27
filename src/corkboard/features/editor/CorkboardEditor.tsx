@@ -419,7 +419,7 @@ export default function CorkboardEditor() {
     document.getElementById('cb-close-help-btn')!.onclick = () => helpModal.classList.remove('active');
 
     // Welcome polaroid
-    const emojis = ['🍧', '🍦', '🍨', '🧁', '🎀', '✨', '🌸', '🥰'];
+    const emojis = ['🍧', '🍦', '🍨', '🧁', '🎀', '✨', '🥰'];
     const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
     const randX = Math.random() * (window.innerWidth - 300) + 50;
     const randY = Math.random() * (window.innerHeight - 350) + 50;
