@@ -28,7 +28,7 @@ const tools = [
     description: "A digital photo corkboard for organizing memories. Drag and drop photos, apply retro filters, add captions, and export high-resolution collages.",
     icon: Pin,
     href: "/corkboard",
-    color: "from-amber-700 to-orange-500",
+    color: "from-red-600 to-pink-600",
   },
   {
     name: "QR Generator",
