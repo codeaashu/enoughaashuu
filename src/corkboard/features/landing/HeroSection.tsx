@@ -62,14 +62,15 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.32 }}
         >
           <a href="/corkboard/editor">
-            <Button
-              size="lg"
-              variant="ghost"
-              className="font-semibold px-8 gap-2 text-white bg-gradient-to-r from-red-600 to-pink-600 hover:brightness-110"
-            >
-              Open Web Editor
-              <Icon icon="lucide:arrow-right" width={16} />
-            </Button>
+<Button
+  size="lg"
+  variant="ghost"
+className="font-semibold px-8 py-3 gap-2 text-white bg-gradient-to-r from-red-600 to-pink-600 hover:brightness-110 rounded-full flex items-center">
+  <span className="flex items-center gap-2">
+    Open Web Editor
+    <Icon icon="lucide:arrow-right" width={16} />
+  </span>
+</Button>
           </a>
         </motion.div>
 
