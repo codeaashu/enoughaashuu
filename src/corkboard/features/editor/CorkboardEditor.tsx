@@ -1,7 +1,88 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+
+type LineType = 'straight' | 'sketch' | 'curve' | 'step';
+
+interface LineConnection {
+  id: string;
+  startPinId: string;
+  endPinId: string;
+  color: string;
+  type: LineType;
+}
+
+interface FreehandPath {
+  id: string;
+  points: { x: number, y: number }[];
+  color: string;
+}
+
+// Generates a squiggly line path between two points
+function generateSketchPath(x1: number, y1: number, x2: number, y2: number): string {
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const length = Math.sqrt(dx * dx + dy * dy);
+  if (length < 10) return `M ${x1} ${y1} L ${x2} ${y2}`;
+
+  const numSegments = Math.max(3, Math.floor(length / 20));
+  const nx = dx / length;
+  const ny = dy / length;
+  
+  let path = `M ${x1} ${y1}`;
+  for (let i = 1; i < numSegments; i++) {
+    const t = i / numSegments;
+    const px = x1 + dx * t;
+    const py = y1 + dy * t;
+    
+    // Perpendicular offset for squiggle
+    const offset = (Math.random() - 0.5) * 15;
+    const finalX = px + (-ny) * offset;
+    const finalY = py + nx * offset;
+    
+    path += ` L ${finalX} ${finalY}`;
+  }
+  path += ` L ${x2} ${y2}`;
+  return path;
+}
+
+function generateCurvePath(x1: number, y1: number, x2: number, y2: number): string {
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  // Control points: go outwards perpendicular to the line to create a bowing curve
+  const nx = -dy * 0.25;
+  const ny = dx * 0.25;
+  return `M ${x1} ${y1} C ${x1 + nx} ${y1 + ny}, ${x2 + nx} ${y2 + ny}, ${x2} ${y2}`;
+}
+
+function generateStepPath(x1: number, y1: number, x2: number, y2: number): string {
+  const midX = (x1 + x2) / 2;
+  const radius = Math.min(15, Math.abs(x2 - x1) / 2, Math.abs(y2 - y1) / 2);
+  
+  if (radius < 5) {
+     return `M ${x1} ${y1} L ${midX} ${y1} L ${midX} ${y2} L ${x2} ${y2}`;
+  }
+  
+  const dirX = Math.sign(x2 - x1);
+  const dirY = Math.sign(y2 - y1);
+  
+  return `M ${x1} ${y1} 
+          L ${midX - radius * dirX} ${y1} 
+          Q ${midX} ${y1} ${midX} ${y1 + radius * dirY} 
+          L ${midX} ${y2 - radius * dirY} 
+          Q ${midX} ${y2} ${midX + radius * dirX} ${y2} 
+          L ${x2} ${y2}`;
+}
+
+function pointsToSvgPath(points: {x: number, y: number}[]): string {
+  if (points.length === 0) return '';
+  let d = `M ${points[0].x} ${points[0].y}`;
+  for (let i = 1; i < points.length; i++) {
+    d += ` L ${points[i].x} ${points[i].y}`;
+  }
+  return d;
+}
 
 const PIN_STYLES = [
   'radial-gradient(circle at 30% 30%, #ef4444, #991b1b)',
@@ -25,6 +106,114 @@ const FILTER_STYLES = [
 export default function CorkboardEditor() {
   const initialized = useRef(false);
 
+  // --- React State for Lines ---
+  const [lines, setLines] = useState<LineConnection[]>([]);
+  const [freehandPaths, setFreehandPaths] = useState<FreehandPath[]>([]);
+  const [isDrawMode, setIsDrawMode] = useState(false);
+  const [drawType, setDrawType] = useState<LineType>('straight');
+  const [drawColor, setDrawColor] = useState('#e63946');
+  
+  // Real-time mapping of pin elements to their centers
+  const [pinPositions, setPinPositions] = useState<Record<string, { x: number, y: number }>>({});
+  
+  // Active drawing state for pins
+  const [drawingStartPin, setDrawingStartPin] = useState<{ id: string, x: number, y: number } | null>(null);
+  
+  // Active drawing state for freehand
+  const [activeFreehand, setActiveFreehand] = useState<FreehandPath | null>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  
+  // Hover state for line deletion
+  const [hoveredLineToken, setHoveredLineToken] = useState<{ id: string, x: number, y: number, type: 'pin' | 'freehand' } | null>(null);
+
+  // Expose state mutators to vanilla JS land via refs
+  const drawModeRef = useRef(isDrawMode);
+  const drawTypeRef = useRef(drawType);
+  const drawColorRef = useRef(drawColor);
+  
+  useEffect(() => {
+    drawModeRef.current = isDrawMode;
+    drawTypeRef.current = drawType;
+    drawColorRef.current = drawColor;
+    
+    const board = document.getElementById('cb-board');
+    if (board) {
+      if (isDrawMode) board.classList.add('cb-board-drawing');
+      else board.classList.remove('cb-board-drawing');
+    }
+  }, [isDrawMode, drawType, drawColor]);
+
+  // Main game loop to update pin positions (since they move via CSS transforms)
+  useEffect(() => {
+    let animationFrameId: number;
+    const boardElement = document.getElementById('cb-board');
+    
+    const updatePositions = () => {
+      if (!boardElement) return;
+      
+      const newPositions: Record<string, { x: number, y: number }> = {};
+      const polaroids = document.querySelectorAll('.cb-polaroid');
+      
+      polaroids.forEach(p => {
+        const pin = p.querySelector('.cb-pin');
+        if (!pin) return;
+        
+        const pinId = (p as HTMLElement).dataset.pinId;
+        if (!pinId) return;
+        
+        // We calculate pin center relative to viewport
+        const rect = pin.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        newPositions[pinId] = { x: centerX, y: centerY };
+      });
+      
+      setPinPositions(prev => {
+        // Simple depth-1 equality check to avoid infinite re-renders
+        let isDifferent = Object.keys(newPositions).length !== Object.keys(prev).length;
+        if (!isDifferent) {
+          for (const key in newPositions) {
+            if (!prev[key] || Math.abs(prev[key].x - newPositions[key].x) > 1 || Math.abs(prev[key].y - newPositions[key].y) > 1) {
+              isDifferent = true; break;
+            }
+          }
+        }
+        return isDifferent ? newPositions : prev;
+      });
+      
+      animationFrameId = requestAnimationFrame(updatePositions);
+    };
+    
+    updatePositions();
+    return () => cancelAnimationFrame(animationFrameId);
+  }, []);
+
+  // Global mouse tracker for preview line and freehand drawing
+  useEffect(() => {
+    if (!isDrawMode) return;
+    const handleGlobalMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+      if (activeFreehand) {
+        setActiveFreehand(prev => prev ? { ...prev, points: [...prev.points, { x: e.clientX, y: e.clientY }] } : null);
+      }
+    };
+    const handleGlobalUp = () => {
+      if (activeFreehand) {
+        if (activeFreehand.points.length > 2) {
+          setFreehandPaths(prev => [...prev, activeFreehand]);
+        }
+        setActiveFreehand(null);
+      }
+    };
+    window.addEventListener('mousemove', handleGlobalMove);
+    window.addEventListener('mouseup', handleGlobalUp);
+    return () => {
+      window.removeEventListener('mousemove', handleGlobalMove);
+      window.removeEventListener('mouseup', handleGlobalUp);
+    };
+  }, [isDrawMode, activeFreehand]);
+
   useEffect(() => {
     if (initialized.current) return;
     initialized.current = true;
@@ -32,7 +221,6 @@ export default function CorkboardEditor() {
     // ---- State ----
     const board = document.getElementById('cb-board')!;
     let zIndexCounter = 100;
-    let polaroidCount = 0;
     let globalPinIndex = 0;
     let confirmCallback: (() => void) | null = null;
 
@@ -160,7 +348,6 @@ export default function CorkboardEditor() {
       }
 
       board.appendChild(el);
-      polaroidCount++;
 
       const img = el.querySelector('img') as HTMLImageElement;
       const pin = el.querySelector('.cb-pin') as HTMLElement;
@@ -174,6 +361,10 @@ export default function CorkboardEditor() {
         const h = img.naturalHeight * editState.scale;
         return { x: Math.max(0, (w - 236) / 2), y: Math.max(0, (h - 240) / 2) };
       }
+
+      // Generate a unique ID for this polaroid's pin (used for string drawing)
+      const pinId = 'pin_' + Math.random().toString(36).substr(2, 9);
+      (el as HTMLElement).dataset.pinId = pinId;
 
       img.onload = () => {
         const wRatio = 236 / img.naturalWidth;
@@ -202,12 +393,40 @@ export default function CorkboardEditor() {
           el.style.transform = `scale(0.5) rotate(${rotation + 20}deg)`;
           (el as HTMLElement).style.opacity = '0';
           setTimeout(() => el.remove(), 250);
-          polaroidCount--;
         });
       });
 
       pin.addEventListener('click', (e) => {
         e.stopPropagation();
+        
+        if (drawModeRef.current) {
+          // INTERCEPT CLICK FOR LINE DRAWING
+          const rect = pin.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          
+          setDrawingStartPin(prev => {
+            if (!prev) {
+              // Start drawing
+              setMousePos({ x: centerX, y: centerY });
+              return { id: pinId, x: centerX, y: centerY };
+            } else {
+              // Finish drawing
+              if (prev.id !== pinId) {
+                setLines(lines => [...lines, {
+                  id: 'line_' + Date.now(),
+                  startPinId: prev.id,
+                  endPinId: pinId,
+                  color: drawColorRef.current,
+                  type: drawTypeRef.current
+                }]);
+              }
+              return null; // Reset
+            }
+          });
+          return;
+        }
+
         editState.pinIndex = (editState.pinIndex + 1) % PIN_STYLES.length;
         pin.style.background = PIN_STYLES[editState.pinIndex];
         pin.style.boxShadow = editState.pinIndex === 5 ? 'none' : '';
@@ -341,12 +560,17 @@ export default function CorkboardEditor() {
 
       let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
       const cardWidth = 260, cardHeight = 297;
+      
+      // Determine bounding box of all cards
       cards.forEach(c => {
         const x = parseFloat((c as HTMLElement).style.left);
         const y = parseFloat((c as HTMLElement).style.top);
         minX = Math.min(minX, x); minY = Math.min(minY, y);
         maxX = Math.max(maxX, x + cardWidth); maxY = Math.max(maxY, y + cardHeight);
       });
+      // Add padding
+      minX -= 100; minY -= 100;
+      maxX += 100; maxY += 100;
 
       const wrapper = document.createElement('div');
       wrapper.style.cssText = `position:absolute;left:50%;top:50%;width:${maxX-minX}px;height:${maxY-minY}px;transform-origin:center center;`;
@@ -355,6 +579,7 @@ export default function CorkboardEditor() {
       wrapper.style.transform = `translate(-50%, -50%) scale(${globalScale})`;
       exportContainer.appendChild(wrapper);
 
+      // Clone Polaroids
       cards.forEach(card => {
         const img = (card.querySelector('img') as HTMLImageElement).src;
         const caption = (card.querySelector('input') as HTMLInputElement).value;
@@ -366,6 +591,20 @@ export default function CorkboardEditor() {
         clone.style.border = '1px solid rgba(0,0,0,0.15)';
         wrapper.appendChild(clone);
       });
+
+      // Clone SVG Lines layer ON TOP of everything (or just below pins, but for export over polaroids is fine)
+      const linesLayer = document.getElementById('cb-lines-layer');
+      if (linesLayer) {
+        const linesSvgWrapper = document.createElement('div');
+        linesSvgWrapper.style.cssText = `position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000;pointer-events:none;transform:translate(${-minX}px, ${-minY}px);`;
+        const clonedSvg = linesLayer.cloneNode(true) as SVGElement;
+        
+        // Remove hover hitboxes from export
+        clonedSvg.querySelectorAll('.cb-line-hitbox').forEach(el => el.remove());
+        
+        linesSvgWrapper.appendChild(clonedSvg);
+        wrapper.appendChild(linesSvgWrapper);
+      }
 
       try {
         const html2canvas = (await import('html2canvas')).default;
@@ -386,7 +625,7 @@ export default function CorkboardEditor() {
     });
 
     document.getElementById('cb-clear-btn')!.addEventListener('click', () => {
-      showConfirm("Clear Board?", "This will remove every photo.", () => {
+      showConfirm("Clear Board?", "This will remove every photo and line.", () => {
         document.querySelectorAll('.cb-polaroid').forEach((c, i) => {
           setTimeout(() => {
             (c as HTMLElement).style.transform = "scale(0) rotate(180deg)";
@@ -394,6 +633,8 @@ export default function CorkboardEditor() {
             setTimeout(() => c.remove(), 300);
           }, i * 50);
         });
+        setLines([]);
+        setFreehandPaths([]);
       });
     });
 
@@ -449,8 +690,160 @@ export default function CorkboardEditor() {
         <rect width="100%" height="100%" filter="url(#cb-cork-texture)" opacity="0.85" />
       </svg>
 
+      {/* Lines Layer */}
+      <svg id="cb-lines-layer" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="cb-string-shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="2" stdDeviation="2" floodOpacity="0.5"/>
+          </filter>
+          
+          {/* Generate arrowhead markers for each unique color being used */}
+          {Array.from(new Set([...lines.map(l => l.color), drawColor])).map(color => (
+            <marker 
+              key={color} 
+              id={`arrow-${color.replace('#', '')}`} 
+              markerWidth="8" markerHeight="8" 
+              refX="6" refY="4" 
+              orient="auto-start-reverse"
+            >
+              <path d="M 0 0 L 8 4 L 0 8 z" fill={color} />
+            </marker>
+          ))}
+        </defs>
+
+        {lines.map(line => {
+          const p1 = pinPositions[line.startPinId];
+          const p2 = pinPositions[line.endPinId];
+          if (!p1 || !p2) return null; // Wait for positions to be ready
+
+          let pathD = '';
+          if (line.type === 'straight') pathD = `M ${p1.x} ${p1.y} L ${p2.x} ${p2.y}`;
+          else if (line.type === 'curve') pathD = generateCurvePath(p1.x, p1.y, p2.x, p2.y);
+          else if (line.type === 'step') pathD = generateStepPath(p1.x, p1.y, p2.x, p2.y);
+          else pathD = generateSketchPath(p1.x, p1.y, p2.x, p2.y);
+
+          const hasMarker = line.type === 'step' || line.type === 'curve';
+
+          return (
+            <g 
+              key={line.id} 
+              className="cb-line-group"
+              onMouseEnter={() => {
+                const midX = (p1.x + p2.x) / 2;
+                const midY = (p1.y + p2.y) / 2;
+                setHoveredLineToken({ id: line.id, x: midX, y: midY, type: 'pin' });
+              }}
+              onMouseLeave={() => {
+                // We don't hide immediately because they need to move mouse to the button
+              }}
+            >
+              {/* Invisible fat line for easier hovering */}
+              <path d={pathD} className="cb-line-hitbox" />
+              {/* Visible line */}
+              <path 
+                d={pathD} 
+                className="cb-line-path" 
+                stroke={line.color} 
+                filter="url(#cb-string-shadow)"
+                markerEnd={hasMarker ? `url(#arrow-${line.color.replace('#', '')})` : undefined}
+              />
+            </g>
+          );
+        })}
+
+        {/* Render Freehand Paths */}
+        {freehandPaths.map(path => {
+          const pathD = pointsToSvgPath(path.points);
+          return (
+            <g 
+              key={path.id} 
+              className="cb-line-group"
+              onMouseEnter={() => {
+                // Find middle point of the stroke
+                const midIndex = Math.floor(path.points.length / 2);
+                const midPt = path.points[midIndex];
+                if (midPt) {
+                  setHoveredLineToken({ id: path.id, x: midPt.x, y: midPt.y, type: 'freehand' });
+                }
+              }}
+            >
+              <path d={pathD} className="cb-line-hitbox" />
+              <path d={pathD} className="cb-line-path" stroke={path.color} filter="url(#cb-string-shadow)"/>
+            </g>
+          );
+        })}
+
+        {/* Record/Preview Active Freehand */}
+        {activeFreehand && (
+          <path 
+            className="cb-line-path" 
+            d={pointsToSvgPath(activeFreehand.points)} 
+            stroke={activeFreehand.color} 
+            filter="url(#cb-string-shadow)"
+          />
+        )}
+
+        {/* Live Drawing Preview Line (Pin-to-pin) */}
+        {isDrawMode && drawingStartPin && (() => {
+          let previewPath = '';
+          if (drawType === 'straight') previewPath = `M ${drawingStartPin.x} ${drawingStartPin.y} L ${mousePos.x} ${mousePos.y}`;
+          else if (drawType === 'curve') previewPath = generateCurvePath(drawingStartPin.x, drawingStartPin.y, mousePos.x, mousePos.y);
+          else if (drawType === 'step') previewPath = generateStepPath(drawingStartPin.x, drawingStartPin.y, mousePos.x, mousePos.y);
+          else previewPath = generateSketchPath(drawingStartPin.x, drawingStartPin.y, mousePos.x, mousePos.y);
+          
+          const willHaveMarker = drawType === 'step' || drawType === 'curve';
+          
+          return (
+            <path 
+              className="cb-line-path"
+              d={previewPath}
+              stroke={drawColor}
+              strokeDasharray="5,5"
+              style={{ opacity: 0.6 }}
+              markerEnd={willHaveMarker ? `url(#arrow-${drawColor.replace('#', '')})` : undefined}
+            />
+          );
+        })()}
+      </svg>
+
+      {/* Delete Line Bubble Button */}
+      <div 
+        className={`cb-line-delete-btn ${hoveredLineToken ? 'visible' : ''}`}
+        style={{ left: hoveredLineToken?.x || -100, top: hoveredLineToken?.y || -100 }}
+        onMouseEnter={() => {}} // Keeps it visible while hovered
+        onMouseLeave={() => setHoveredLineToken(null)}
+        onClick={() => {
+          if (hoveredLineToken) {
+            if (hoveredLineToken.type === 'pin') {
+              setLines(lines => lines.filter(l => l.id !== hoveredLineToken.id));
+            } else {
+              setFreehandPaths(paths => paths.filter(p => p.id !== hoveredLineToken.id));
+            }
+            setHoveredLineToken(null);
+          }
+        }}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </div>
+
       {/* Board */}
-      <div id="cb-board">
+      <div 
+        id="cb-board" 
+        onMouseDown={(e) => {
+          // Identify if we clicked the pure background, not a polaroid or modal
+          const target = e.target as HTMLElement;
+          if (target.id === 'cb-board' || target.id === 'cb-drop-hint' || target.id === 'cb-lines-layer' || target.tagName === 'svg') {
+             if (isDrawMode && !drawingStartPin) {
+                // Start a Freehand Sketch!
+                setActiveFreehand({ id: 'freehand_' + Date.now(), color: drawColor, points: [{ x: e.clientX, y: e.clientY }] });
+             }
+          }
+        }}
+        onClick={() => {
+          // Cancel pin drawing if clicking empty board
+          if (isDrawMode && drawingStartPin) setDrawingStartPin(null);
+        }}
+      >
         <div className="cb-drop-hint" id="cb-drop-hint">
           <span className="cb-drop-text">Drop Photos Here!</span>
         </div>
@@ -464,6 +857,47 @@ export default function CorkboardEditor() {
 
       {/* Bottom Toolbar */}
       <div className="cb-ui-overlay">
+        {/* Connection Tools */}
+        <div style={{ display: 'flex', gap: '0.25rem', padding: '0 0.5rem', borderRight: '1px solid rgba(255,255,255,0.2)' }}>
+          <button 
+            className={`cb-ui-btn ${isDrawMode ? 'active-draw-mode' : ''}`} 
+            onClick={() => {
+              setIsDrawMode(!isDrawMode);
+              setDrawingStartPin(null);
+            }} 
+            title="Connect Pins (Draw Lines)"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/></svg>
+          </button>
+          
+          {isDrawMode && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', paddingLeft: '0.5rem', background: 'rgba(0,0,0,0.5)', borderRadius: '2rem', padding: '0.25rem 0.5rem' }}>
+              <button 
+                onClick={() => {
+                   const types: LineType[] = ['straight', 'sketch', 'curve', 'step'];
+                   setDrawType(t => types[(types.indexOf(t) + 1) % types.length]);
+                }}
+                style={{ 
+                  background: 'transparent', border: 'none', color: '#fff', 
+                  fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer',
+                  padding: '0.25rem 0.5rem', borderRadius: '1rem',
+                  backgroundColor: 'rgba(255,255,255,0.1)'
+                }}
+                title="Cycle Line Type (Straight, Sketch, Curve, Step)"
+              >
+                {drawType.toUpperCase()}
+              </button>
+              <input 
+                type="color" 
+                className="cb-color-picker" 
+                value={drawColor}
+                onChange={(e) => setDrawColor(e.target.value)}
+                title="Line Color"
+              />
+            </div>
+          )}
+        </div>
+
         <button className="cb-ui-btn" id="cb-add-btn" title="Add Image">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
         </button>
@@ -542,6 +976,7 @@ export default function CorkboardEditor() {
               { icon: '✂️', label: 'Crop Mode', desc: 'Click the blue crop icon to pan & zoom.' },
               { icon: '🎨', label: 'Filters', desc: 'Click the wand icon to cycle retro filters (Sepia, B&W, Vintage…).' },
               { icon: '📌', label: 'Pins', desc: 'Use the pin toolbar button to cycle ALL pins, or click individual pins.' },
+              { icon: '✍️', label: 'Draw', desc: 'Use the bottom toolbar to toggle Draw Mode. Click a pin to connect string, OR click and drag the board to draw freehand.' },
               { icon: '🔀', label: 'Organize', desc: 'Click the Grid icon to randomly arrange photos on screen.' },
               { icon: '⬇️', label: 'Export', desc: 'Downloads a 4K wallpaper with your collage centered.' },
             ].map(item => (

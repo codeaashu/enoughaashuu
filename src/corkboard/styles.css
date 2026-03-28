@@ -331,3 +331,121 @@
   overflow: hidden;
   background-color: #7b5c42;
 }
+
+/* ===== String / Line Drawing ===== */
+
+#cb-lines-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Let clicks pass through empty space */
+  z-index: 50; /* Above background, below polaroids (100+) */
+  overflow: visible;
+}
+
+.cb-line-group {
+  pointer-events: stroke; /* Only the stroke itself receives mouse events */
+  cursor: pointer;
+}
+
+.cb-line-path {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke-width 0.2s, stroke 0.2s;
+  filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.4));
+}
+
+.cb-line-hitbox {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 25; /* Fat transparent invisible line to make hovering easy */
+}
+
+.cb-line-group:hover .cb-line-path {
+  stroke-width: 5;
+  filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.6));
+}
+
+/* The delete trashcan that shows up on hover midway on a line */
+.cb-line-delete-btn {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ef4444; /* red-500 */
+  z-index: 60; /* Above lines, below polaroids */
+  cursor: pointer;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  pointer-events: none; /* Default none */
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s;
+}
+
+.cb-line-delete-btn.visible {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  pointer-events: auto; /* Clickable when visible */
+}
+
+.cb-line-delete-btn:hover {
+  background: #fee2e2;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Pin interaction states during drawing */
+.cb-board-drawing .cb-pin {
+  cursor: crosshair !important;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.5), 2px 4px 6px rgba(0,0,0,0.3) !important;
+  animation: cb-pulse-pin 1.5s infinite;
+}
+
+.cb-board-drawing .cb-polaroid {
+  cursor: crosshair;
+}
+
+@keyframes cb-pulse-pin {
+  0% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.2); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+/* Line Tools UI */
+.cb-color-picker {
+  -webkit-appearance: none;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.2);
+}
+
+.cb-color-picker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+.cb-color-picker::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+.cb-ui-btn.active-draw-mode {
+  background: #f97316; /* orange-500 */
+  color: #fff;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+.cb-ui-btn.active-draw-mode:hover {
+  background: #ea580c;
+  color: #fff;
+}
