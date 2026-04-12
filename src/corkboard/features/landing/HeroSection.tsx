@@ -37,14 +37,6 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.25 }}
           className="flex flex-col items-center"
         >
-          <a href="https://peerlist.io/aashuu/project/enough-aashuu" target="_blank" rel="noreferrer">
-            <img
-              src="https://dqy38fnwh4fqs.cloudfront.net/website/project-spotlight/project-week-rank-one-dark.svg"
-              alt="enough aashuu"
-              style={{ width: "auto", height: "64px" }}
-              className="mb-4"
-            />
-          </a>
 
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm md:text-base text-gray-300 mb-10">
             <span className="relative flex h-2 w-2">

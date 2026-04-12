@@ -1,11 +1,5 @@
 <div align="center"> 
-<a href="https://peerlist.io/aashuu/project/enough-aashuu" target="_blank" rel="noreferrer">
-			<img
-			  src="https://dqy38fnwh4fqs.cloudfront.net/website/project-spotlight/project-week-rank-one-dark.svg"
-			  alt="enough aashuu"
-			  style="width: auto; height: 64px;"
-			/>
-		  </a>
+
 <img width="1781" height="740" alt="enoughaashuu" src="https://github.com/user-attachments/assets/0951b6fe-d120-4ee5-9429-915f3007f1f1" />
 
 <h2 align="center"><a href="https://enough.aashuu.tech/"><strong>✦ enough.aashuu.tech ✦</strong></a></h2>

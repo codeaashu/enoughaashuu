@@ -207,13 +207,6 @@ export default function LandingPage() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="flex flex-col items-center"
             >
-              <a href="https://peerlist.io/aashuu/project/enough-aashuu" target="_blank" rel="noreferrer">
-                <img
-                  src="https://dqy38fnwh4fqs.cloudfront.net/website/project-spotlight/project-week-rank-one-dark.svg"
-                  alt="enough aashuu"
-                  style={{ width: "auto", height: "64px" }}
-                />
-              </a>
             </motion.div>
           </div>
 
