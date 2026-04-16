@@ -88,7 +88,7 @@ export default function Footer() {
             <h4 className="text-sm font-semibold text-white mb-4">Follow</h4>
             <div className="flex gap-3">
               <a
-                href="https://x.com/enoughaashuu"
+                href="https://x.com/warrioraashuu"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"

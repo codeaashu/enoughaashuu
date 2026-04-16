@@ -5,7 +5,7 @@ import { motion, type Variants } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
 
-const FEEDBACK_URL = "https://x.com/enoughaashuu";
+const FEEDBACK_URL = "https://x.com/warrioraashuu";
 const ICECREAM_URL = "https://buymeacoffee.com/aashuu";
 const WEBSITE_URL = "https://enough.aashuu.tech/";
 
