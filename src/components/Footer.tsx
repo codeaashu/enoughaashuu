@@ -19,11 +19,7 @@ export default function Footer() {
                   Image Remover
                 </Link>
               </li>
-              <li>
-                <Link href="/video-remover" className="hover:text-white transition-colors">
-                  Video Remover
-                </Link>
-              </li>
+
               <li>
                 <Link href="/background-remover" className="hover:text-white transition-colors">
                   Background Remover

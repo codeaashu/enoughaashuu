@@ -3,14 +3,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Image as ImageIcon, Video, Eraser, Github, Twitter, Brain, House, QrCode, Shapes, Pin } from "lucide-react";
+import { Image as ImageIcon, Eraser, Github, Twitter, Brain, House, QrCode, Shapes, Pin } from "lucide-react";
 
 export default function TopNavbar() {
   const pathname = usePathname();
   const isLandingPage = pathname === "/";
   const isHomePage = pathname === "/";
   const isImagePage = pathname === "/image-remover";
-  const isVideoPage = pathname === "/video-remover";
+
   const isBackgroundPage = pathname === "/background-remover";
   const isAIDetectorPage = pathname === "/ai-image-detector";
   const isQrCodePage = pathname === "/qr-code-generator";
@@ -136,18 +136,7 @@ export default function TopNavbar() {
                 <span className="hidden lg:inline">AI Detector</span>
               </Link>
 
-              <Link
-                href="/video-remover"
-                aria-label="Video Remover"
-                aria-current={isVideoPage ? "page" : undefined}
-                className={`relative flex flex-1 min-w-0 items-center justify-center gap-0 md:gap-2 px-2 md:px-5 py-2.5 rounded-xl text-sm transition-all duration-300 whitespace-nowrap ${isVideoPage
-                    ? "text-white shadow-lg bg-gradient-to-r from-fuchsia-600 to-fuchsia-500"
-                    : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
-                  }`}
-              >
-                <Video className="w-5 h-5" />
-                <span className="hidden lg:inline">Video Remover</span>
-              </Link>
+
 
               <Link
                 href="/background-remover"

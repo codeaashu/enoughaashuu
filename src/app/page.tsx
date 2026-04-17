@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Image as ImageIcon, Video, Eraser, Brain, QrCode, Shapes, Pin } from "lucide-react";
+import { Image as ImageIcon, Eraser, Brain, QrCode, Shapes, Pin } from "lucide-react";
 import TopNavbar from "@/components/TopNavbar";
 import Footer from "@/components/Footer";
 import Loader from "@/components/Loader";
@@ -43,13 +43,6 @@ const tools = [
     icon: Brain,
     href: "/ai-image-detector",
     color: "from-purple-600 to-pink-500",
-  },
-  {
-    name: "Video Remover",
-    description: "Clean invisible watermarks from Sora AI-generated videos.",
-    icon: Video,
-    href: "/video-remover",
-    color: "from-fuchsia-600 to-fuchsia-500",
   },
   {
     name: "Background Remover",
